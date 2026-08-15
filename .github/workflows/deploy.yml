@@ -1,0 +1,71 @@
+name: Build & Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+env:
+  PROJECT_ID: top-cedar-471512-k3
+  SERVICE_NAME: orgflo
+  REGION: us-east1
+  REGISTRY: us-east1-docker.pkg.dev
+  REPO: us-east1-docker.pkg.dev/top-cedar-471512-k3/orgflo
+
+jobs:
+  build-and-deploy:
+    name: Build, Push & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout source code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Authenticate to Google Cloud using Service Account key
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # 3. Set up the gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # 4. Authorize Docker to push to Artifact Registry
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker us-east1-docker.pkg.dev --quiet
+
+      # 5. Build the Docker image
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t $REPO/orgflo:${{ github.sha }} \
+            -t $REPO/orgflo:latest \
+            .
+
+      # 6. Push both tags to Artifact Registry
+      - name: Push Docker Image to Artifact Registry
+        run: |
+          docker push $REPO/orgflo:${{ github.sha }}
+          docker push $REPO/orgflo:latest
+
+      # 7. Deploy the new image to Cloud Run
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image $REPO/orgflo:${{ github.sha }} \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated \
+            --quiet
+
+      # 8. Print the live service URL
+      - name: Get Service URL
+        run: |
+          echo "✅ Deployed successfully!"
+          gcloud run services describe $SERVICE_NAME \
+            --platform managed \
+            --region $REGION \
+            --format="value(status.url)"
