@@ -26,13 +26,27 @@ export const MemberDirectoryPage: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
   // New member form state
-  const [name, setName] = useState('');
+  const [fName, setFName] = useState('');
+  const [lName, setLName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [department, setDepartment] = useState('Finance & Operations');
-  const [role, setRole] = useState('Standard Member');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [role, setRole] = useState<'MEMBER' | 'ADMIN'>('MEMBER');
   const [status, setStatus] = useState<'Active' | 'Pending'>('Active');
   const [duesOwed, setDuesOwed] = useState('50');
+
+  // Format phone for display: (XXX) XXX-XXXX
+  const formatPhoneInput = (value: string) => {
+    const digits = value.replace(/\D/g, '').slice(0, 10);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setPhoneNumber(raw);
+  };
 
   const filteredMembers = members.filter((m) => {
     const matchesSearch =
@@ -46,22 +60,34 @@ export const MemberDirectoryPage: React.FC = () => {
 
   const handleCreateMember = (e: React.FormEvent) => {
     e.preventDefault();
+    if (phoneNumber.length !== 10) {
+      alert('Please enter a valid 10-digit US phone number.');
+      return;
+    }
+    const fullPhone = `+1${phoneNumber}`;
+    const fullName = `${fName.trim()} ${lName.trim()}`;
     addMember({
-      name,
+      name: fullName,
       email,
-      phone,
-      department,
-      role,
+      phone: fullPhone,
+      department: '',
+      role: role === 'ADMIN' ? 'Admin' : 'Member',
       status,
       joinDate: new Date().toISOString().split('T')[0],
       duesOwed: parseFloat(duesOwed) || 0,
-      avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000)}?w=150`
+      avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000)}?w=150`,
+      address: address.trim() || undefined,
     });
 
     // Reset form
-    setName('');
+    setFName('');
+    setLName('');
     setEmail('');
-    setPhone('');
+    setPhoneNumber('');
+    setAddress('');
+    setRole('MEMBER');
+    setStatus('Active');
+    setDuesOwed('50');
     setShowAddModal(false);
   };
 
@@ -258,90 +284,119 @@ export const MemberDirectoryPage: React.FC = () => {
             </div>
 
             <form onSubmit={handleCreateMember} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* First Name & Last Name */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Samuel"
+                    value={fName}
+                    onChange={(e) => setFName(e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Vance"
+                    value={lName}
+                    onChange={(e) => setLName(e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
+                  />
+                </div>
+              </div>
+
+              {/* Email */}
               <div>
                 <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
-                  Full Name
+                  Email Address
                 </label>
                 <input
-                  type="text"
-                  required
-                  placeholder="e.g. Samuel Vance"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  type="email"
+                  placeholder="samuel@orgflow.com (optional)"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
-                    Email Address
-                  </label>
+              {/* Phone Number with US Country Code */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
+                  Phone Number
+                </label>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '10px 12px',
+                      borderRadius: '10px',
+                      border: '1.5px solid #dce8df',
+                      background: '#f4f8f5',
+                      fontSize: '0.92rem',
+                      fontWeight: '700',
+                      color: 'var(--primary)',
+                      whiteSpace: 'nowrap',
+                      userSelect: 'none',
+                    }}
+                  >
+                    <span style={{ fontSize: '1.1rem' }}>🇺🇸</span> +1
+                  </div>
                   <input
-                    type="email"
+                    type="tel"
                     required
-                    placeholder="samuel@orgflow.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
+                    placeholder="(555) 000-1111"
+                    value={formatPhoneInput(phoneNumber)}
+                    onChange={handlePhoneChange}
+                    maxLength={16}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none', letterSpacing: '0.5px' }}
                   />
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="+1 (555) 000-1111"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
-                  />
-                </div>
+                {phoneNumber.length > 0 && phoneNumber.length < 10 && (
+                  <span style={{ fontSize: '0.75rem', color: '#c0392b', marginTop: '4px', display: 'block' }}>
+                    Enter a 10-digit phone number
+                  </span>
+                )}
               </div>
 
+              {/* Address */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
+                  Address
+                </label>
+                <input
+                  type="text"
+                  placeholder="123 Main St, Detroit, MI (optional)"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
+                />
+              </div>
+
+              {/* Role & Status */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
-                    Department
-                  </label>
-                  <select
-                    value={department}
-                    onChange={(e) => setDepartment(e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
-                  >
-                    <option value="Finance & Operations">Finance & Operations</option>
-                    <option value="Executive Board">Executive Board</option>
-                    <option value="Events & Programs">Events & Programs</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Membership Care">Membership Care</option>
-                  </select>
-                </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
                     Role
                   </label>
-                  <input
-                    type="text"
+                  <select
                     value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
-                    Initial Dues Owed ($)
-                  </label>
-                  <input
-                    type="number"
-                    value={duesOwed}
-                    onChange={(e) => setDuesOwed(e.target.value)}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
-                  />
+                    onChange={(e) => setRole(e.target.value as 'MEMBER' | 'ADMIN')}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none', background: '#fff' }}
+                  >
+                    <option value="MEMBER">Member</option>
+                    <option value="ADMIN">Admin</option>
+                  </select>
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
@@ -350,12 +405,27 @@ export const MemberDirectoryPage: React.FC = () => {
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value as 'Active' | 'Pending')}
-                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
+                    style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none', background: '#fff' }}
                   >
                     <option value="Active">Active</option>
                     <option value="Pending">Pending</option>
                   </select>
                 </div>
+              </div>
+
+              {/* Monthly Dues */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '4px' }}>
+                  Monthly Dues ($)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={duesOwed}
+                  onChange={(e) => setDuesOwed(e.target.value)}
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1.5px solid #dce8df', outline: 'none' }}
+                />
               </div>
 
               <button
