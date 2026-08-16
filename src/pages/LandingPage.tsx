@@ -26,6 +26,7 @@ import { useAuth } from '../context/AuthContext';
 import boardImage from '../assets/board.png';
 import phoneImage from '../assets/phone.png';
 import logoImage from '../assets/orgflogo-cropped.png';
+import dbLogoImage from '../assets/orgflogodb.png';
 
 const features = [
   {
@@ -306,7 +307,16 @@ export const LandingPage: React.FC = () => {
             <button className="modal-close" onClick={() => setShowDemoModal(false)} aria-label="Close demo modal">
               <X size={20} />
             </button>
-            <span className="demo-icon"><ShieldCheck size={26} /></span>
+            <img
+              src={dbLogoImage}
+              alt="ORGFLO Logo"
+              style={{
+                height: '70px',
+                width: 'auto',
+                objectFit: 'contain',
+                marginBottom: '18px'
+              }}
+            />
             <h2 id="demo-title">Select Demo Role</h2>
             <p>Experience ORGFLOW with pre-seeded demo data.</p>
             <button onClick={() => handleDemoClick('admin')}>Login as Admin <ArrowUpRight size={18} /></button>
