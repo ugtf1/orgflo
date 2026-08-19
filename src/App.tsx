@@ -5,6 +5,7 @@ import { DataProvider } from './context/DataContext';
 
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
+import { AssociationHomePage } from './pages/AssociationHomePage';
 
 import { AppLayout } from './components/AppLayout';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -45,6 +46,7 @@ export const AppContent: React.FC = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/association" element={<AssociationHomePage />} />
       <Route path="/login" element={<LoginPage />} />
 
       {/* Admin Portal Protected Routes */}

@@ -50,9 +50,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
   const navItems = isAdmin ? adminNavItems : memberNavItems;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f5f8f5' }}>
+    <div className={`app-layout${isMobileMenuOpen ? ' mobile-nav-open' : ''}`} style={{ display: 'flex', minHeight: '100vh', background: '#f5f8f5' }}>
       {/* Sidebar Navigation */}
       <aside
+        className="app-sidebar"
         style={{
           width: '260px',
           background: '#0e3d26',
@@ -106,6 +107,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
                 <Link
                   key={item.path}
                   to={item.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -145,6 +147,23 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
             }}
           >
             <Home size={16} /> Landing Page
+          </button>
+          <button
+            onClick={() => navigate('/association')}
+            style={{
+              background: 'rgba(255,255,255,0.08)',
+              color: '#d4ebd9',
+              padding: '10px',
+              borderRadius: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              fontSize: '0.85rem',
+              fontWeight: '600'
+            }}
+          >
+            <Home size={16} /> Association Page
           </button>
 
           <div
@@ -195,11 +214,11 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
       </aside>
 
       {/* Main Content Viewport */}
-      <div style={{ marginLeft: '260px', flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div className="app-main" style={{ marginLeft: '260px', flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         {/* Top Header Bar */}
         <header
           style={{
-            height: '70px',
+            height: '50px',
             background: '#ffffff',
             borderBottom: '1px solid #e2ece4',
             display: 'flex',
@@ -211,7 +230,15 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
             zIndex: 80
           }}
         >
-          <div>
+          <button
+            className="app-mobile-menu-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+
+          <div className="app-header-copy">
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: '800', color: 'var(--primary)' }}>
               {settings.orgName} Workspace
             </h3>
@@ -255,7 +282,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
         </header>
 
         {/* Page Content Body */}
-        <main style={{ padding: '32px', flex: 1 }}>{children}</main>
+        <main className="app-page-content" style={{ padding: '32px', flex: 1 }}>{children}</main>
       </div>
     </div>
   );
