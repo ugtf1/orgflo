@@ -34,17 +34,52 @@ export const AdminDashboardPage: React.FC = () => {
   const totalDuesPaid = members.reduce((sum, m) => sum + m.duesPaid, 0);
   const totalDuesOwed = members.reduce((sum, m) => sum + m.duesOwed, 0);
 
-  // Recharts Monthly Revenue Data
-  const monthlyData = [
-    { month: 'Jan', amount: 1850 },
-    { month: 'Feb', amount: 2200 },
-    { month: 'Mar', amount: 1950 },
-    { month: 'Apr', amount: 2800 },
-    { month: 'May', amount: 3100 },
-    { month: 'Jun', amount: 2600 },
-    { month: 'Jul', amount: 3400 },
-    { month: 'Aug', amount: 4100 }
+  // Month definition list
+  const MONTHS_LIST = [
+    { full: 'January', short: 'Jan' },
+    { full: 'February', short: 'Feb' },
+    { full: 'March', short: 'Mar' },
+    { full: 'April', short: 'Apr' },
+    { full: 'May', short: 'May' },
+    { full: 'June', short: 'Jun' },
+    { full: 'July', short: 'Jul' },
+    { full: 'August', short: 'Aug' },
+    { full: 'September', short: 'Sep' },
+    { full: 'October', short: 'Oct' },
+    { full: 'November', short: 'Nov' },
+    { full: 'December', short: 'Dec' }
   ];
+
+  // Dynamically calculate total sum of all recorded transactions (all categories) on a monthly basis
+  const monthlySumMap: Record<string, number> = {};
+  MONTHS_LIST.forEach((m) => {
+    monthlySumMap[m.short] = 0;
+  });
+
+  transactions.forEach((tx) => {
+    let monthShort = '';
+    if (tx.month) {
+      const found = MONTHS_LIST.find(
+        (m) => m.full.toLowerCase() === tx.month.toLowerCase() || m.short.toLowerCase() === tx.month.toLowerCase()
+      );
+      if (found) monthShort = found.short;
+    }
+    if (!monthShort && tx.date) {
+      const d = new Date(tx.date);
+      if (!isNaN(d.getTime())) {
+        monthShort = MONTHS_LIST[d.getMonth()].short;
+      }
+    }
+    if (monthShort && monthlySumMap[monthShort] !== undefined) {
+      monthlySumMap[monthShort] += Number(tx.amount || 0);
+    }
+  });
+
+  const monthlyData = MONTHS_LIST.slice(0, 8).map((m) => ({
+    month: m.short,
+    totalSum: monthlySumMap[m.short],
+    amount: monthlySumMap[m.short]
+  }));
 
   const COLORS = ['#0e3d26', '#196a43', '#529671', '#88c99e', '#b7e4c7'];
 
@@ -204,9 +239,11 @@ export const AdminDashboardPage: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: '800', color: 'var(--primary)' }}>
-                Dues & Revenue Collection Trend (2026)
+                Monthly Total Sum of All Recorded Transactions
               </h3>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Monthly aggregate breakdown</span>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                Visualizing total sum across all categories (Dues, Donations, Levies, Event Fees) per month
+              </span>
             </div>
             <button
               onClick={() => navigate('/admin/analytics')}
@@ -227,8 +264,8 @@ export const AdminDashboardPage: React.FC = () => {
                 </defs>
                 <XAxis dataKey="month" stroke="#888" fontSize={12} />
                 <YAxis stroke="#888" fontSize={12} />
-                <Tooltip formatter={(value) => [`$${value}`, 'Collection']} />
-                <Area type="monotone" dataKey="amount" stroke="#0e3d26" strokeWidth={3} fillOpacity={1} fill="url(#colorArea)" />
+                <Tooltip formatter={(value: any) => [`${settings.currency}${Number(value).toLocaleString()}`, 'Total Sum (All Categories)']} />
+                <Area type="monotone" dataKey="totalSum" stroke="#0e3d26" strokeWidth={3} fillOpacity={1} fill="url(#colorArea)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

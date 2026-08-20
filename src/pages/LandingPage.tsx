@@ -117,7 +117,7 @@ export const LandingPage: React.FC = () => {
         </button>
         <nav className="landing-nav" aria-label="Primary navigation">
           <a href="/">Home</a>
-          <a href="/association">Association Page</a>
+          <a href="/association">Association Page 🌴</a>
           <button onClick={() => setShowDemoModal(true)}>Demo</button>
           <button className="nav-demo" onClick={() => setShowDemoModal(true)}>
             Try Demo Now

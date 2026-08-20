@@ -15,6 +15,7 @@ import { PivotMembersPage } from './pages/PivotMembersPage';
 import { TransactionsPage } from './pages/TransactionsPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { MeetingRecorderPage } from './pages/MeetingRecorderPage';
+import { MeetingHostingPage } from './pages/MeetingHostingPage';
 import { AdminSettingsPage } from './pages/AdminSettingsPage';
 
 import { MemberDashboardPage } from './pages/MemberDashboardPage';
@@ -121,6 +122,16 @@ export const AppContent: React.FC = () => {
         }
       />
       <Route
+        path="/admin/hosting"
+        element={
+          <RequireAdmin>
+            <AppLayout>
+              <MeetingHostingPage />
+            </AppLayout>
+          </RequireAdmin>
+        }
+      />
+      <Route
         path="/admin/settings"
         element={
           <RequireAdmin>
@@ -138,6 +149,26 @@ export const AppContent: React.FC = () => {
           <RequireAuth>
             <AppLayout>
               <MemberDashboardPage />
+            </AppLayout>
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/member/meetings"
+        element={
+          <RequireAuth>
+            <AppLayout>
+              <MeetingRecorderPage />
+            </AppLayout>
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/member/hosting"
+        element={
+          <RequireAuth>
+            <AppLayout>
+              <MeetingHostingPage />
             </AppLayout>
           </RequireAuth>
         }

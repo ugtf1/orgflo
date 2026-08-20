@@ -15,11 +15,27 @@ import {
   X,
   Bell,
   Search,
-  Home
+  Home,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
 import logoImage from '../assets/orgflogodb.png';
+
+interface NavSubItem {
+  label: string;
+  path: string;
+  icon: React.ReactNode;
+}
+
+interface NavItem {
+  type: 'link' | 'submenu';
+  label: string;
+  icon: React.ReactNode;
+  path?: string;
+  children?: NavSubItem[];
+}
 
 export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
@@ -28,26 +44,47 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
   const { settings } = useData();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const isMeetingsActive = location.pathname.includes('/meetings') || location.pathname.includes('/hosting');
+  const [isMeetingsOpen, setIsMeetingsOpen] = useState<boolean>(isMeetingsActive || true);
+
   const isAdmin = user?.role === 'admin';
 
-  const adminNavItems = [
-    { label: 'Overview', path: '/admin', icon: <LayoutDashboard size={18} /> },
-    { label: 'Member Directory', path: '/admin/members', icon: <Users size={18} /> },
-    { label: 'Pivot View', path: '/admin/pivot', icon: <Grid size={18} /> },
-    { label: 'Transactions', path: '/admin/transactions', icon: <CreditCard size={18} /> },
-    { label: 'Financial Analytics', path: '/admin/analytics', icon: <BarChart3 size={18} /> },
-    { label: 'Meeting Tracker', path: '/admin/meetings', icon: <CalendarCheck size={18} /> },
-    { label: 'Settings', path: '/admin/settings', icon: <Settings size={18} /> }
+  const meetingsSubMenu: { label: string; icon: React.ReactNode; children: NavSubItem[] } = {
+    label: 'Meetings',
+    icon: <CalendarCheck size={18} />,
+    children: [
+      {
+        label: 'Meeting Tracker',
+        path: isAdmin ? '/admin/meetings' : '/member/meetings',
+        icon: <CalendarCheck size={16} />
+      },
+      {
+        label: 'Meeting Hosting',
+        path: isAdmin ? '/admin/hosting' : '/member/hosting',
+        icon: <UserCheck size={16} />
+      }
+    ]
+  };
+
+  const adminNavItems: NavItem[] = [
+    { type: 'link', label: 'Overview', path: '/admin', icon: <LayoutDashboard size={18} /> },
+    { type: 'link', label: 'Member Directory', path: '/admin/members', icon: <Users size={18} /> },
+    { type: 'link', label: 'Pivot View', path: '/admin/pivot', icon: <Grid size={18} /> },
+    { type: 'link', label: 'Transactions', path: '/admin/transactions', icon: <CreditCard size={18} /> },
+    { type: 'link', label: 'Financial Analytics', path: '/admin/analytics', icon: <BarChart3 size={18} /> },
+    { type: 'submenu', ...meetingsSubMenu },
+    { type: 'link', label: 'Settings', path: '/admin/settings', icon: <Settings size={18} /> }
   ];
 
-  const memberNavItems = [
-    { label: 'Member Portal', path: '/member', icon: <LayoutDashboard size={18} /> },
-    { label: 'My Dues & History', path: '/member/transactions', icon: <CreditCard size={18} /> },
-    { label: 'My Account', path: '/member/account', icon: <UserCheck size={18} /> },
-    { label: 'Settings', path: '/member/settings', icon: <Settings size={18} /> }
+  const memberNavItems: NavItem[] = [
+    { type: 'link', label: 'Member Portal', path: '/member', icon: <LayoutDashboard size={18} /> },
+    { type: 'submenu', ...meetingsSubMenu },
+    { type: 'link', label: 'My Dues & History', path: '/member/transactions', icon: <CreditCard size={18} /> },
+    { type: 'link', label: 'My Account', path: '/member/account', icon: <UserCheck size={18} /> },
+    { type: 'link', label: 'Settings', path: '/member/settings', icon: <Settings size={18} /> }
   ];
 
-  const navItems = isAdmin ? adminNavItems : memberNavItems;
+  const navItems: NavItem[] = isAdmin ? adminNavItems : memberNavItems;
 
   return (
     <div className={`app-layout${isMobileMenuOpen ? ' mobile-nav-open' : ''}`} style={{ display: 'flex', minHeight: '100vh', background: '#f5f8f5' }}>
@@ -101,13 +138,74 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
 
           {/* Navigation Links */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            {navItems.map((item) => {
+            {navItems.map((item, idx) => {
+              if (item.type === 'submenu' && item.children) {
+                return (
+                  <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <button
+                      onClick={() => setIsMeetingsOpen(!isMeetingsOpen)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        fontWeight: '600',
+                        fontSize: '0.92rem',
+                        color: isMeetingsActive ? 'var(--primary)' : '#c3ded0',
+                        background: isMeetingsActive ? 'rgba(255,255,255,0.12)' : 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        {item.icon}
+                        {item.label}
+                      </div>
+                      {isMeetingsOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                    </button>
+
+                    {isMeetingsOpen && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', paddingLeft: '24px' }}>
+                        {item.children.map((child) => {
+                          const isChildActive = location.pathname === child.path;
+                          return (
+                            <Link
+                              key={child.path}
+                              to={child.path}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '10px 14px',
+                                borderRadius: '10px',
+                                fontWeight: isChildActive ? '700' : '500',
+                                fontSize: '0.86rem',
+                                color: isChildActive ? 'var(--primary)' : '#a3c7b2',
+                                background: isChildActive ? 'var(--accent-mint)' : 'transparent',
+                                transition: 'all 0.2s ease'
+                              }}
+                            >
+                              {child.icon}
+                              {child.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.path}
-                  to={item.path}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  to={item.path!}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',

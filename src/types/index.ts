@@ -55,6 +55,24 @@ export interface MeetingSession {
   excusedCount: number;
   status: 'Upcoming' | 'In Progress' | 'Completed';
   attendanceRecords: Record<string, 'Present' | 'Absent' | 'Excused'>;
+  transcript?: string;
+  audioUrl?: string;
+  duration?: string;
+  aiSummary?: {
+    executiveSummary: string;
+    actionItems: string[];
+    motionsPassed: string[];
+  };
+}
+
+export interface HostingScheduleItem {
+  id: string;
+  year: number;
+  month: string;
+  hostMemberId: string;
+  hostMemberName: string;
+  assignedDate: string;
+  notes?: string;
 }
 
 export interface OrgSettings {

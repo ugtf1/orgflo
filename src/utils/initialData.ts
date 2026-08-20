@@ -1,4 +1,4 @@
-import { Member, Transaction, MeetingSession, OrgSettings } from '../types';
+import { Member, Transaction, MeetingSession, OrgSettings, HostingScheduleItem } from '../types';
 
 export const INITIAL_SETTINGS: OrgSettings = {
   orgName: 'ORGFLO',
@@ -190,13 +190,14 @@ export const INITIAL_MEMBERS: Member[] = [
 ];
 
 export const INITIAL_TRANSACTIONS: Transaction[] = [
+  // January 2026
   {
     id: 'tx-1',
     transactionId: 'TXN-90812',
     memberId: 'mem-101',
     memberName: 'Sarah Jenkins',
     type: 'Dues',
-    amount: 500,
+    amount: 1850,
     status: 'Paid',
     paymentMethod: 'Bank Transfer',
     date: '2026-01-10',
@@ -206,94 +207,363 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     notes: 'Annual Membership Dues 2026'
   },
   {
-    id: 'tx-2',
-    transactionId: 'TXN-90813',
-    memberId: 'mem-102',
-    memberName: 'Alex Morgan',
-    type: 'Dues',
-    amount: 50,
-    status: 'Paid',
-    paymentMethod: 'Mobile Money',
-    date: '2026-08-01',
-    month: 'August',
-    year: 2026,
-    receiptNumber: 'RCP-2026-082',
-    notes: 'August Monthly Dues'
-  },
-  {
-    id: 'tx-3',
-    transactionId: 'TXN-90814',
-    memberId: 'mem-103',
-    memberName: 'Amara Okafor',
-    type: 'Dues',
-    amount: 500,
-    status: 'Paid',
-    paymentMethod: 'Card',
-    date: '2026-01-15',
-    month: 'January',
-    year: 2026,
-    receiptNumber: 'RCP-2026-005',
-    notes: 'Annual Full Dues'
-  },
-  {
-    id: 'tx-4',
-    transactionId: 'TXN-90815',
-    memberId: 'mem-104',
-    memberName: 'David Chen',
-    type: 'Dues',
-    amount: 50,
-    status: 'Overdue',
-    paymentMethod: 'Mobile Money',
-    date: '2026-07-01',
-    month: 'July',
-    year: 2026,
-    receiptNumber: 'RCP-2026-071',
-    notes: 'July Dues Outstanding'
-  },
-  {
-    id: 'tx-5',
-    transactionId: 'TXN-90816',
+    id: 'tx-1b',
+    transactionId: 'TXN-90812B',
     memberId: 'mem-105',
     memberName: 'Maria Garcia',
     type: 'Donation',
+    amount: 400,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-01-18',
+    month: 'January',
+    year: 2026,
+    receiptNumber: 'RCP-2026-002',
+    notes: 'New Year Outreach Donation'
+  },
+  {
+    id: 'tx-1c',
+    transactionId: 'TXN-90812C',
+    memberId: 'mem-108',
+    memberName: 'Robert Taylor',
+    type: 'Special Levy',
+    amount: 200,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-01-25',
+    month: 'January',
+    year: 2026,
+    receiptNumber: 'RCP-2026-003',
+    notes: 'Q1 Technology Infrastructure Levy'
+  },
+
+  // February 2026
+  {
+    id: 'tx-2a',
+    transactionId: 'TXN-90820',
+    memberId: 'mem-102',
+    memberName: 'Alex Morgan',
+    type: 'Dues',
+    amount: 2200,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-02-05',
+    month: 'February',
+    year: 2026,
+    receiptNumber: 'RCP-2026-010',
+    notes: 'February Dues Batch'
+  },
+  {
+    id: 'tx-2b',
+    transactionId: 'TXN-90821',
+    memberId: 'mem-106',
+    memberName: 'James Wilson',
+    type: 'Donation',
+    amount: 150,
+    status: 'Paid',
+    paymentMethod: 'Bank Transfer',
+    date: '2026-02-14',
+    month: 'February',
+    year: 2026,
+    receiptNumber: 'RCP-2026-011',
+    notes: 'Sponsorship Contribution'
+  },
+  {
+    id: 'tx-2c',
+    transactionId: 'TXN-90822',
+    memberId: 'mem-107',
+    memberName: 'Fatima Al-Mansoor',
+    type: 'Event Fee',
+    amount: 300,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-02-22',
+    month: 'February',
+    year: 2026,
+    receiptNumber: 'RCP-2026-012',
+    notes: 'Leadership Summit Workshop Ticket'
+  },
+
+  // March 2026
+  {
+    id: 'tx-3a',
+    transactionId: 'TXN-90830',
+    memberId: 'mem-103',
+    memberName: 'Amara Okafor',
+    type: 'Dues',
+    amount: 1950,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-03-08',
+    month: 'March',
+    year: 2026,
+    receiptNumber: 'RCP-2026-020',
+    notes: 'March Membership Dues'
+  },
+  {
+    id: 'tx-3b',
+    transactionId: 'TXN-90831',
+    memberId: 'mem-112',
+    memberName: 'Marcus Vance',
+    type: 'Donation',
+    amount: 600,
+    status: 'Paid',
+    paymentMethod: 'Bank Transfer',
+    date: '2026-03-15',
+    month: 'March',
+    year: 2026,
+    receiptNumber: 'RCP-2026-021',
+    notes: 'Alumni Endowment Donation'
+  },
+  {
+    id: 'tx-3c',
+    transactionId: 'TXN-90832',
+    memberId: 'mem-104',
+    memberName: 'David Chen',
+    type: 'Special Levy',
+    amount: 100,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-03-29',
+    month: 'March',
+    year: 2026,
+    receiptNumber: 'RCP-2026-022',
+    notes: 'Equipment Upgrade Levy'
+  },
+
+  // April 2026
+  {
+    id: 'tx-4a',
+    transactionId: 'TXN-90840',
+    memberId: 'mem-109',
+    memberName: 'Elena Rostova',
+    type: 'Dues',
+    amount: 2800,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-04-02',
+    month: 'April',
+    year: 2026,
+    receiptNumber: 'RCP-2026-030',
+    notes: 'April Membership Collection'
+  },
+  {
+    id: 'tx-4b',
+    transactionId: 'TXN-90841',
+    memberId: 'mem-110',
+    memberName: 'Kwame Mensah',
+    type: 'Donation',
+    amount: 300,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-04-18',
+    month: 'April',
+    year: 2026,
+    receiptNumber: 'RCP-2026-031',
+    notes: 'Community Care Grant'
+  },
+  {
+    id: 'tx-4c',
+    transactionId: 'TXN-90842',
+    memberId: 'mem-101',
+    memberName: 'Sarah Jenkins',
+    type: 'Event Fee',
+    amount: 450,
+    status: 'Paid',
+    paymentMethod: 'Bank Transfer',
+    date: '2026-04-27',
+    month: 'April',
+    year: 2026,
+    receiptNumber: 'RCP-2026-032',
+    notes: 'Q2 Regional Convention Pass'
+  },
+
+  // May 2026
+  {
+    id: 'tx-5a',
+    transactionId: 'TXN-90850',
+    memberId: 'mem-102',
+    memberName: 'Alex Morgan',
+    type: 'Dues',
+    amount: 3100,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-05-04',
+    month: 'May',
+    year: 2026,
+    receiptNumber: 'RCP-2026-040',
+    notes: 'May Member Dues Receipts'
+  },
+  {
+    id: 'tx-5b',
+    transactionId: 'TXN-90851',
+    memberId: 'mem-105',
+    memberName: 'Maria Garcia',
+    type: 'Donation',
+    amount: 200,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-05-19',
+    month: 'May',
+    year: 2026,
+    receiptNumber: 'RCP-2026-041',
+    notes: 'Youth Mentorship Fund'
+  },
+  {
+    id: 'tx-5c',
+    transactionId: 'TXN-90852',
+    memberId: 'mem-106',
+    memberName: 'James Wilson',
+    type: 'Special Levy',
     amount: 250,
+    status: 'Paid',
+    paymentMethod: 'Bank Transfer',
+    date: '2026-05-30',
+    month: 'May',
+    year: 2026,
+    receiptNumber: 'RCP-2026-042',
+    notes: 'Hall Renovation Fund'
+  },
+
+  // June 2026
+  {
+    id: 'tx-6a',
+    transactionId: 'TXN-90860',
+    memberId: 'mem-103',
+    memberName: 'Amara Okafor',
+    type: 'Dues',
+    amount: 2600,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-06-01',
+    month: 'June',
+    year: 2026,
+    receiptNumber: 'RCP-2026-050',
+    notes: 'June Dues Assessment'
+  },
+  {
+    id: 'tx-6b',
+    transactionId: 'TXN-90861',
+    memberId: 'mem-105',
+    memberName: 'Maria Garcia',
+    type: 'Donation',
+    amount: 800,
     status: 'Paid',
     paymentMethod: 'Card',
     date: '2026-06-20',
     month: 'June',
     year: 2026,
-    receiptNumber: 'RCP-2026-064',
-    notes: 'Annual Gala Fundraiser Donation'
+    receiptNumber: 'RCP-2026-051',
+    notes: 'Annual Gala Fundraiser Primary Donation'
   },
   {
-    id: 'tx-6',
-    transactionId: 'TXN-90817',
+    id: 'tx-6c',
+    transactionId: 'TXN-90862',
+    memberId: 'mem-107',
+    memberName: 'Fatima Al-Mansoor',
+    type: 'Event Fee',
+    amount: 500,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-06-28',
+    month: 'June',
+    year: 2026,
+    receiptNumber: 'RCP-2026-052',
+    notes: 'Mid-Year Banquet Registration'
+  },
+
+  // July 2026
+  {
+    id: 'tx-7a',
+    transactionId: 'TXN-90870',
+    memberId: 'mem-104',
+    memberName: 'David Chen',
+    type: 'Dues',
+    amount: 3400,
+    status: 'Paid',
+    paymentMethod: 'Bank Transfer',
+    date: '2026-07-03',
+    month: 'July',
+    year: 2026,
+    receiptNumber: 'RCP-2026-060',
+    notes: 'July Dues Collection'
+  },
+  {
+    id: 'tx-7b',
+    transactionId: 'TXN-90871',
+    memberId: 'mem-108',
+    memberName: 'Robert Taylor',
+    type: 'Donation',
+    amount: 100,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-07-14',
+    month: 'July',
+    year: 2026,
+    receiptNumber: 'RCP-2026-061',
+    notes: 'Publication & PR Support'
+  },
+  {
+    id: 'tx-7c',
+    transactionId: 'TXN-90872',
+    memberId: 'mem-109',
+    memberName: 'Elena Rostova',
+    type: 'Special Levy',
+    amount: 300,
+    status: 'Paid',
+    paymentMethod: 'Card',
+    date: '2026-07-26',
+    month: 'July',
+    year: 2026,
+    receiptNumber: 'RCP-2026-062',
+    notes: 'Building Project Stage 1'
+  },
+
+  // August 2026
+  {
+    id: 'tx-8a',
+    transactionId: 'TXN-90880',
+    memberId: 'mem-102',
+    memberName: 'Alex Morgan',
+    type: 'Dues',
+    amount: 4100,
+    status: 'Paid',
+    paymentMethod: 'Mobile Money',
+    date: '2026-08-01',
+    month: 'August',
+    year: 2026,
+    receiptNumber: 'RCP-2026-080',
+    notes: 'August Monthly Dues Collection'
+  },
+  {
+    id: 'tx-8b',
+    transactionId: 'TXN-90881',
     memberId: 'mem-106',
     memberName: 'James Wilson',
-    type: 'Dues',
-    amount: 50,
+    type: 'Donation',
+    amount: 500,
     status: 'Paid',
     paymentMethod: 'Bank Transfer',
     date: '2026-08-05',
     month: 'August',
     year: 2026,
-    receiptNumber: 'RCP-2026-089',
-    notes: 'August Dues Payment'
+    receiptNumber: 'RCP-2026-081',
+    notes: 'August Charity Drive Contribution'
   },
   {
-    id: 'tx-7',
-    transactionId: 'TXN-90818',
+    id: 'tx-8c',
+    transactionId: 'TXN-90882',
     memberId: 'mem-107',
     memberName: 'Fatima Al-Mansoor',
     type: 'Special Levy',
-    amount: 100,
-    status: 'Pending',
+    amount: 600,
+    status: 'Paid',
     paymentMethod: 'Mobile Money',
     date: '2026-08-10',
     month: 'August',
     year: 2026,
-    receiptNumber: 'RCP-2026-092',
-    notes: 'Building Project Levy'
+    receiptNumber: 'RCP-2026-082',
+    notes: 'Building Project Levy Phase 2'
   }
 ];
 
@@ -322,6 +592,25 @@ export const INITIAL_MEETINGS: MeetingSession[] = [
       'mem-110': 'Present',
       'mem-111': 'Excused',
       'mem-112': 'Present'
+    },
+    duration: '42m 15s',
+    audioUrl: 'https://actions.google.com/sounds/v1/ambiences/outdoor_park.ogg',
+    transcript: `[00:00] Sarah Jenkins: Welcome everyone to the Q3 General Assembly of OrgFlo Cultural Association. Today we are reviewing financial performance and confirming host schedules.
+[05:12] James Wilson: Thank you President Sarah. As Treasurer, I am happy to report our Q3 dues collections reached $4,100, which puts us ahead of target for the hall renovation project.
+[14:30] Amara Okafor: Regarding upcoming cultural events, we have finalized venue bookings for the Heritage Gala in December. Host assignments for Q4 have been confirmed.
+[28:45] David Chen: On technology, the new floating mic recorder and AI summarizer tool on OrgFlo portal is now live for all board admins.
+[38:10] Sarah Jenkins: Motion moved by Amara and seconded by James to approve the $1,500 budget allocation for the Youth Mentorship Program. All in favor? Motion carried unanimously. Meeting adjourned at 18:42.`,
+    aiSummary: {
+      executiveSummary: 'The Q3 General Assembly covered Q3 financial growth, hall renovation fund status, December Heritage Gala bookings, and technology upgrades to the OrgFlo workspace.',
+      actionItems: [
+        'James Wilson to disburse initial deposit for December Gala venue by Friday.',
+        'David Chen to complete user permission onboarding for new board members.',
+        'All members to review monthly hosting schedule for Q4 2026.'
+      ],
+      motionsPassed: [
+        'Approved $1,500 budget allocation for Youth Mentorship Program (Unanimous).',
+        'Adopted revised hosting rotation schedule for 2026/2027 calendar.'
+      ]
     }
   },
   {
@@ -337,4 +626,34 @@ export const INITIAL_MEETINGS: MeetingSession[] = [
     status: 'Upcoming',
     attendanceRecords: {}
   }
+];
+
+export const INITIAL_HOSTING_SCHEDULE: HostingScheduleItem[] = [
+  // 2025
+  { id: 'sch-2025-01', year: 2025, month: 'January', hostMemberId: 'mem-101', hostMemberName: 'Sarah Jenkins', assignedDate: '2025-01-05', notes: 'New Year Cultural Kickoff' },
+  { id: 'sch-2025-02', year: 2025, month: 'February', hostMemberId: 'mem-103', hostMemberName: 'Amara Okafor', assignedDate: '2025-01-05', notes: 'Black History Month Celebration' },
+  { id: 'sch-2025-03', year: 2025, month: 'March', hostMemberId: 'mem-105', hostMemberName: 'Maria Garcia', assignedDate: '2025-01-05', notes: 'Spring Fellowship Gathering' },
+  { id: 'sch-2025-04', year: 2025, month: 'April', hostMemberId: 'mem-102', hostMemberName: 'Alex Morgan', assignedDate: '2025-01-05', notes: 'Quarterly Youth & Family Picnic' },
+  { id: 'sch-2025-05', year: 2025, month: 'May', hostMemberId: 'mem-104', hostMemberName: 'David Chen', assignedDate: '2025-01-05', notes: 'Cultural Heritage Symposium' },
+  { id: 'sch-2025-06', year: 2025, month: 'June', hostMemberId: 'mem-106', hostMemberName: 'James Wilson', assignedDate: '2025-01-05', notes: 'Mid-Year Gala Prep Meeting' },
+  { id: 'sch-2025-07', year: 2025, month: 'July', hostMemberId: 'mem-107', hostMemberName: 'Fatima Al-Mansoor', assignedDate: '2025-01-05', notes: 'Summer Cultural Festival Host' },
+  { id: 'sch-2025-08', year: 2025, month: 'August', hostMemberId: 'mem-108', hostMemberName: 'Robert Taylor', assignedDate: '2025-01-05', notes: 'Annual Association Banquet' },
+  { id: 'sch-2025-09', year: 2025, month: 'September', hostMemberId: 'mem-109', hostMemberName: 'Elena Rostova', assignedDate: '2025-01-05', notes: 'Elders Honor Ceremony' },
+  { id: 'sch-2025-10', year: 2025, month: 'October', hostMemberId: 'mem-102', hostMemberName: 'Alex Morgan', assignedDate: '2025-01-05', notes: 'Cultural Harvest Festival' },
+  { id: 'sch-2025-11', year: 2025, month: 'November', hostMemberId: 'mem-110', hostMemberName: 'Kwame Mensah', assignedDate: '2025-01-05', notes: 'Thanksgiving & Charity Drive' },
+  { id: 'sch-2025-12', year: 2025, month: 'December', hostMemberId: 'mem-112', hostMemberName: 'Marcus Vance', assignedDate: '2025-01-05', notes: 'End of Year Grand Ball' },
+
+  // 2026
+  { id: 'sch-2026-01', year: 2026, month: 'January', hostMemberId: 'mem-101', hostMemberName: 'Sarah Jenkins', assignedDate: '2026-01-02', notes: 'New Year Vision Sync' },
+  { id: 'sch-2026-02', year: 2026, month: 'February', hostMemberId: 'mem-103', hostMemberName: 'Amara Okafor', assignedDate: '2026-01-02', notes: 'Heritage Dinner' },
+  { id: 'sch-2026-03', year: 2026, month: 'March', hostMemberId: 'mem-105', hostMemberName: 'Maria Garcia', assignedDate: '2026-01-02', notes: 'Women Leadership Forum' },
+  { id: 'sch-2026-04', year: 2026, month: 'April', hostMemberId: 'mem-106', hostMemberName: 'James Wilson', assignedDate: '2026-01-02', notes: 'Financial Audit Meeting' },
+  { id: 'sch-2026-05', year: 2026, month: 'May', hostMemberId: 'mem-107', hostMemberName: 'Fatima Al-Mansoor', assignedDate: '2026-01-02', notes: 'Community Outreach Gathering' },
+  { id: 'sch-2026-06', year: 2026, month: 'June', hostMemberId: 'mem-104', hostMemberName: 'David Chen', assignedDate: '2026-01-02', notes: 'Youth Mentorship Night' },
+  { id: 'sch-2026-07', year: 2026, month: 'July', hostMemberId: 'mem-109', hostMemberName: 'Elena Rostova', assignedDate: '2026-01-02', notes: 'Summer Picnic & Sports Day' },
+  { id: 'sch-2026-08', year: 2026, month: 'August', hostMemberId: 'mem-102', hostMemberName: 'Alex Morgan', assignedDate: '2026-01-02', notes: 'Q3 General Assembly Host' },
+  { id: 'sch-2026-09', year: 2026, month: 'September', hostMemberId: 'mem-108', hostMemberName: 'Robert Taylor', assignedDate: '2026-01-02', notes: 'Scholarship Fund Presentation' },
+  { id: 'sch-2026-10', year: 2026, month: 'October', hostMemberId: 'mem-110', hostMemberName: 'Kwame Mensah', assignedDate: '2026-01-02', notes: 'Cultural Music & Dance Night' },
+  { id: 'sch-2026-11', year: 2026, month: 'November', hostMemberId: 'mem-111', hostMemberName: 'Grace Kim', assignedDate: '2026-01-02', notes: 'Annual Member Recognition' },
+  { id: 'sch-2026-12', year: 2026, month: 'December', hostMemberId: 'mem-112', hostMemberName: 'Marcus Vance', assignedDate: '2026-01-02', notes: 'End-of-Year Cultural Celebration' }
 ];

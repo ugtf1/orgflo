@@ -1,18 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Member, Transaction, MeetingSession, OrgSettings } from '../types';
-import { INITIAL_MEMBERS, INITIAL_TRANSACTIONS, INITIAL_MEETINGS, INITIAL_SETTINGS } from '../utils/initialData';
+import { Member, Transaction, MeetingSession, OrgSettings, HostingScheduleItem } from '../types';
+import { INITIAL_MEMBERS, INITIAL_TRANSACTIONS, INITIAL_MEETINGS, INITIAL_SETTINGS, INITIAL_HOSTING_SCHEDULE } from '../utils/initialData';
 
 interface DataContextType {
   members: Member[];
   transactions: Transaction[];
   meetings: MeetingSession[];
+  hostingSchedule: HostingScheduleItem[];
   settings: OrgSettings;
   addMember: (member: Omit<Member, 'id' | 'memberCode' | 'duesPaid'>) => void;
   updateMember: (id: string, updated: Partial<Member>) => void;
   deleteMember: (id: string) => void;
   addTransaction: (tx: Omit<Transaction, 'id' | 'transactionId' | 'date' | 'month' | 'year' | 'receiptNumber'>) => Transaction;
   updateTransactionStatus: (id: string, status: Transaction['status']) => void;
+  addMeeting: (meeting: Omit<MeetingSession, 'id'>) => MeetingSession;
+  deleteMeeting: (id: string) => void;
+  updateMeetingAiSummary: (id: string, aiSummary: MeetingSession['aiSummary']) => void;
   updateAttendance: (meetingId: string, memberId: string, status: 'Present' | 'Absent' | 'Excused') => void;
+  assignHostMember: (year: number, month: string, hostMemberId: string, hostMemberName: string, notes?: string) => void;
   updateSettings: (newSettings: Partial<OrgSettings>) => void;
   resetDemoData: () => void;
 }
@@ -35,6 +40,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return saved ? JSON.parse(saved) : INITIAL_MEETINGS;
   });
 
+  const [hostingSchedule, setHostingSchedule] = useState<HostingScheduleItem[]>(() => {
+    const saved = localStorage.getItem('orgflo_hosting_schedule');
+    return saved ? JSON.parse(saved) : INITIAL_HOSTING_SCHEDULE;
+  });
+
   const [settings, setSettings] = useState<OrgSettings>(() => {
     const saved = localStorage.getItem('orgflo_settings');
     return saved ? JSON.parse(saved) : INITIAL_SETTINGS;
@@ -51,6 +61,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     localStorage.setItem('orgflo_meetings', JSON.stringify(meetings));
   }, [meetings]);
+
+  useEffect(() => {
+    localStorage.setItem('orgflo_hosting_schedule', JSON.stringify(hostingSchedule));
+  }, [hostingSchedule]);
 
   useEffect(() => {
     localStorage.setItem('orgflo_settings', JSON.stringify(settings));
@@ -123,6 +137,25 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  const addMeeting = (meetingData: Omit<MeetingSession, 'id'>): MeetingSession => {
+    const newMeeting: MeetingSession = {
+      ...meetingData,
+      id: `mtg-${Date.now()}`,
+    };
+    setMeetings((prev) => [newMeeting, ...prev]);
+    return newMeeting;
+  };
+
+  const deleteMeeting = (id: string) => {
+    setMeetings((prev) => prev.filter((m) => m.id !== id));
+  };
+
+  const updateMeetingAiSummary = (id: string, aiSummary: MeetingSession['aiSummary']) => {
+    setMeetings((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, aiSummary } : m))
+    );
+  };
+
   const updateAttendance = (
     meetingId: string,
     memberId: string,
@@ -153,6 +186,41 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  const assignHostMember = (
+    year: number,
+    month: string,
+    hostMemberId: string,
+    hostMemberName: string,
+    notes?: string
+  ) => {
+    setHostingSchedule((prev) => {
+      const existingIndex = prev.findIndex((h) => h.year === year && h.month === month);
+      const today = new Date().toISOString().split('T')[0];
+      if (existingIndex >= 0) {
+        const updated = [...prev];
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          hostMemberId,
+          hostMemberName,
+          assignedDate: today,
+          notes: notes ?? updated[existingIndex].notes,
+        };
+        return updated;
+      } else {
+        const newItem: HostingScheduleItem = {
+          id: `sch-${year}-${month.toLowerCase().slice(0, 3)}`,
+          year,
+          month,
+          hostMemberId,
+          hostMemberName,
+          assignedDate: today,
+          notes: notes || 'Monthly Host',
+        };
+        return [...prev, newItem];
+      }
+    });
+  };
+
   const updateSettings = (newSettings: Partial<OrgSettings>) => {
     setSettings((prev) => ({ ...prev, ...newSettings }));
   };
@@ -161,10 +229,12 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('orgflo_members');
     localStorage.removeItem('orgflo_transactions');
     localStorage.removeItem('orgflo_meetings');
+    localStorage.removeItem('orgflo_hosting_schedule');
     localStorage.removeItem('orgflo_settings');
     setMembers(INITIAL_MEMBERS);
     setTransactions(INITIAL_TRANSACTIONS);
     setMeetings(INITIAL_MEETINGS);
+    setHostingSchedule(INITIAL_HOSTING_SCHEDULE);
     setSettings(INITIAL_SETTINGS);
   };
 
@@ -174,13 +244,18 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         members,
         transactions,
         meetings,
+        hostingSchedule,
         settings,
         addMember,
         updateMember,
         deleteMember,
         addTransaction,
         updateTransactionStatus,
+        addMeeting,
+        deleteMeeting,
+        updateMeetingAiSummary,
         updateAttendance,
+        assignHostMember,
         updateSettings,
         resetDemoData,
       }}
