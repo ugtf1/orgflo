@@ -241,12 +241,19 @@ button {
 .hero-section {
   overflow: hidden;
   padding: 80px 7vw 78px;
+  position: relative;
   text-align: center;
 }
 
 .hero-copy {
   margin: 0 auto;
   max-width: 880px;
+}
+
+.hero-action-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-copy h1 {
@@ -378,11 +385,12 @@ button {
 }
 
 .phone-stage {
-  bottom: 0;
+  bottom: 78px;
   left: 50%;
   position: absolute;
   transform: translateX(-50%);
   width: min(520px, 42vw);
+  z-index: 1;
 }
 
 .phone-stage img {
@@ -1226,46 +1234,96 @@ button {
 @media (max-width: 760px) {
   .landing-header {
     min-height: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .landing-brand {
+    padding: 6px 16px;
+  }
+
+  .brand-logo-image {
+    height: 32px;
   }
 
   .landing-nav {
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 14px;
+    padding: 8px 16px;
+  }
+
+  .landing-nav a,
+  .landing-nav button {
+    font-size: 0.85rem;
+  }
+
+  .landing-nav .nav-demo {
+    display: none !important;
   }
 
   .hero-section {
-    padding: 54px 20px 40px;
+    padding: 36px 16px 28px;
+  }
+
+  .hero-copy h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
   }
 
   .hero-copy p {
-    font-size: 1rem;
+    font-size: 0.88rem;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  .hero-action-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 18px;
+    width: 100%;
+  }
+
+  .phone-stage {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: min(260px, 75vw);
+    margin: 0 auto;
+    display: block;
+  }
+
+  .phone {
+    width: 100%;
+  }
+
+  .phone-hand {
+    display: none;
+  }
+
+  .hero-demo-btn {
+    display: inline-flex !important;
+    margin-top: 0;
+    font-size: 0.9rem;
+    padding: 6px 6px 6px 18px;
+    gap: 10px;
   }
 
   .hero-visual {
     display: grid;
     gap: 18px;
     height: auto;
-    margin-top: 54px;
+    margin-top: 30px;
   }
 
-  .hero-card,
-  .phone-stage {
+  .hero-card {
     position: relative;
     inset: auto;
     transform: none;
     width: 100%;
-  }
-
-  .phone-stage {
-    order: -1;
-  }
-
-  .phone {
-    width: min(274px, 100%);
-  }
-
-  .phone-hand {
-    display: none;
   }
 
   .pain-section,

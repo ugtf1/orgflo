@@ -347,61 +347,53 @@ export const MeetingRecorderPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Navigation Sub-Tabs */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', borderBottom: '2px solid #f0f5f1' }}>
+          {/* Navigation Sub-Tabs — Glowing Styled */}
+          <style>{`
+            @keyframes mtgBorderPulse {
+              0% { border-color: #d4726a; box-shadow: 0 4px 20px rgba(14, 61, 38, 0.12), 0 0 8px rgba(212, 114, 106, 0.25); }
+              50% { border-color: #c0564e; box-shadow: 0 4px 20px rgba(14, 61, 38, 0.12), 0 0 14px rgba(192, 86, 78, 0.35); }
+              100% { border-color: #d4726a; box-shadow: 0 4px 20px rgba(14, 61, 38, 0.12), 0 0 8px rgba(212, 114, 106, 0.25); }
+            }
+            .mtg-tab-bar { display: flex; gap: 10px; margin-bottom: 24px; padding: 6px; background: linear-gradient(135deg, #f0f7f3 0%, #e6f4ea 50%, #f5faf7 100%); border-radius: 16px; border: 1px solid #d0e8d9; box-shadow: 0 2px 12px rgba(14, 61, 38, 0.06); }
+            .mtg-tab-btn { flex: 1; padding: 12px 18px; border: 1.5px solid #e0a8a3; border-radius: 12px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+            .mtg-tab-btn::before { content: ''; position: absolute; inset: 0; border-radius: 12px; opacity: 0; transition: opacity 0.3s ease; background: linear-gradient(135deg, rgba(14, 61, 38, 0.04) 0%, rgba(30, 94, 58, 0.08) 100%); }
+            .mtg-tab-btn:hover::before { opacity: 1; }
+            .mtg-tab-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(14, 61, 38, 0.1); border-color: #d4726a; }
+            .mtg-tab-btn.inactive { background: transparent; color: #6b8f7b; }
+            .mtg-tab-btn.inactive:hover { color: #0e3d26; background: rgba(255,255,255,0.7); }
+            .mtg-tab-btn.active { background: #ffffff; color: #0e3d26; border: 2.5px solid #d4726a; animation: mtgBorderPulse 2s ease-in-out infinite; }
+            .mtg-tab-btn.active:hover { transform: translateY(-1px); }
+            .mtg-tab-btn .tab-icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; transition: all 0.3s ease; }
+            .mtg-tab-btn.active .tab-icon { background: #e6f4ea; color: #0e3d26; }
+            .mtg-tab-btn.inactive .tab-icon { background: transparent; color: #8aad99; }
+            .mtg-tab-btn.inactive:hover .tab-icon { background: #e6f4ea; color: #0e3d26; }
+            .mtg-tab-btn .tab-dot { width: 6px; height: 6px; border-radius: 50%; background: #0e3d26; opacity: 0; transform: scale(0); transition: all 0.3s ease; position: absolute; bottom: 6px; left: 50%; margin-left: -3px; }
+            .mtg-tab-btn.active .tab-dot { opacity: 1; transform: scale(1); }
+          `}</style>
+          <div className="mtg-tab-bar">
             <button
               onClick={() => setActiveTab('attendance')}
-              style={{
-                padding: '10px 16px',
-                border: 'none',
-                background: 'none',
-                fontWeight: '700',
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                color: activeTab === 'attendance' ? '#0e3d26' : '#777',
-                borderBottom: activeTab === 'attendance' ? '3px solid #0e3d26' : '3px solid transparent',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
+              className={`mtg-tab-btn ${activeTab === 'attendance' ? 'active' : 'inactive'}`}
             >
-              <Users size={16} /> Attendance Roll Call
+              <span className="tab-icon"><Users size={16} /></span>
+              Attendance Roll Call
+              <span className="tab-dot" />
             </button>
             <button
               onClick={() => setActiveTab('transcript')}
-              style={{
-                padding: '10px 16px',
-                border: 'none',
-                background: 'none',
-                fontWeight: '700',
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                color: activeTab === 'transcript' ? '#0e3d26' : '#777',
-                borderBottom: activeTab === 'transcript' ? '3px solid #0e3d26' : '3px solid transparent',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
+              className={`mtg-tab-btn ${activeTab === 'transcript' ? 'active' : 'inactive'}`}
             >
-              <FileText size={16} /> Audio & Speech Transcript
+              <span className="tab-icon"><FileText size={16} /></span>
+              Audio & Speech Transcript
+              <span className="tab-dot" />
             </button>
             <button
               onClick={() => setActiveTab('summary')}
-              style={{
-                padding: '10px 16px',
-                border: 'none',
-                background: 'none',
-                fontWeight: '700',
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                color: activeTab === 'summary' ? '#0e3d26' : '#777',
-                borderBottom: activeTab === 'summary' ? '3px solid #0e3d26' : '3px solid transparent',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
+              className={`mtg-tab-btn ${activeTab === 'summary' ? 'active' : 'inactive'}`}
             >
-              <Sparkles size={16} /> AI Executive Summary
+              <span className="tab-icon"><Sparkles size={16} /></span>
+              AI Executive Summary
+              <span className="tab-dot" />
             </button>
           </div>
 

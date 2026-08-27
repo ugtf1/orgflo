@@ -93,7 +93,7 @@ export const AssociationHomePage: React.FC = () => {
     <div className="assoc-page">
       {/* Top Banner */}
       <div className="assoc-top-banner">
-        <span>🎉 Welcome to <strong>Urhobo Progress Union Michigan</strong> &bull; Okugbe, Esiri, Vwon robaro</span>
+        <span>🎉 Welcome to <strong>The Progressive Union Organization, Michigan Chapter</strong></span>
         <div className="banner-links">
           <button onClick={() => navigate('/admin')} className="banner-portal-link">
             <Lock size={13} /> Admin Portal
@@ -115,7 +115,7 @@ export const AssociationHomePage: React.FC = () => {
               <span className="crest-icon">🌴</span>
             </div>
             <div className="brand-text">
-              <span className="brand-title">UPUMI</span>
+              <span className="brand-title">PUOM</span>
               <span className="brand-subtitle">MICHIGAN CHAPTER</span>
             </div>
           </div>
@@ -174,12 +174,11 @@ export const AssociationHomePage: React.FC = () => {
         <div className="assoc-hero-container">
           <div className="assoc-hero-card">
             <div className="assoc-hero-image-wrapper">
-              <img src={assocHero} alt="Urhobo Progress Union Members in Matching Outfits" className="assoc-hero-img" />
+              <img src={assocHero} alt="The Progressive Union Organization Members" className="assoc-hero-img" />
               <div className="hero-overlay-gradient" />
               <div className="hero-text-overlay">
-                <h1 className="hero-org-title">Urhobo Progress Union</h1>
+                <h1 className="hero-org-title">The Progressive Union Organization</h1>
                 <h2 className="hero-org-location">Michigan Chapter</h2>
-                <p className="hero-motto">Okugbe, Esiri, Vwon robaro</p>
                 <div className="hero-pill-badge">
                   <span>PROMOTING CULTURE, UNITY & LOVE</span>
                 </div>
@@ -232,7 +231,7 @@ export const AssociationHomePage: React.FC = () => {
           <div className="about-grid">
             <div className="about-image-col">
               <div className="about-img-frame">
-                <img src={assocElders} alt="UPUMI Elders and Council Members" />
+                <img src={assocElders} alt="PUOM Elders and Council Members" />
                 <div className="about-badge-floating">
                   <Award size={22} />
                   <div>
@@ -246,8 +245,8 @@ export const AssociationHomePage: React.FC = () => {
               <span className="assoc-section-tag">WHO WE ARE</span>
               <h2>United in Culture, Empowered by Brotherhood</h2>
               <p>
-                The <strong>Urhobo Progress Union (UPUMI) Michigan Chapter</strong> is a socio-cultural organization
-                dedicated to preserving the rich heritage, traditions, and values of the Urhobo people while fostering
+                The <strong>The Progressive Union Organization (PUOM) Michigan Chapter</strong> is a socio-cultural organization
+                dedicated to preserving rich heritage, traditions, and values while fostering
                 unbreakable unity, economic advancement, and social welfare among members in Michigan and abroad.
               </p>
               <div className="about-stats-grid">
@@ -281,17 +280,17 @@ export const AssociationHomePage: React.FC = () => {
             {/* Card 1 */}
             <div className="event-card-green">
               <div className="event-card-img-wrap">
-                <img src={assocService} alt="UPUMI 5K Walk" />
+                <img src={assocService} alt="PUOM 5K Walk" />
               </div>
               <div className="event-card-body">
-                <h3>UPUMI 5K</h3>
+                <h3>PUOM 5K</h3>
                 <p>
-                  Join us for our annual UPUMI 5K walk and health awareness day. Bringing together members for wellness, sports education, and community bond.
+                  Join us for our annual PUOM 5K walk and health awareness day. Bringing together members for wellness, sports education, and community bond.
                 </p>
                 <button
                   className="assoc-btn-card"
                   onClick={() => {
-                    setSelectedEvent('UPUMI 5K');
+                    setSelectedEvent('PUOM 5K');
                     setShowRsvpModal(true);
                   }}
                 >
@@ -337,9 +336,9 @@ export const AssociationHomePage: React.FC = () => {
               <div className="flyer-card">
                 <div className="flyer-header">
                   <div className="flyer-logo">
-                    <span>🌴 UPUMI FUNDRAISER</span>
+                    <span>🌴 PUOM FUNDRAISER</span>
                   </div>
-                  <h3>Transforming Lives in Urhoboland & Michigan</h3>
+                  <h3>Transforming Lives in Michigan & Beyond</h3>
                 </div>
                 <div className="flyer-image-box">
                   <img src={assocDance} alt="Community Fundraiser Spotlight" />
@@ -363,9 +362,9 @@ export const AssociationHomePage: React.FC = () => {
             </div>
 
             <div className="spotlight-info-col">
-              <h3>Urhobo Progress Union Michigan Fundraiser</h3>
+              <h3>The Progressive Union Organization Michigan Fundraiser</h3>
               <p>
-                Join us for an inspiring evening dedicated to raising funds for our 2025 initiatives, including youth scholarships, healthcare outreach, community welfare, and empowerment programs in Urhoboland and Michigan.
+                Join us for an inspiring evening dedicated to raising funds for our 2025 initiatives, including youth scholarships, healthcare outreach, community welfare, and empowerment programs in Michigan.
               </p>
               <p className="spotlight-subtext">
                 Your presence and support will bring us closer to securing a better future for our people. Let us build together!
@@ -392,7 +391,7 @@ export const AssociationHomePage: React.FC = () => {
                 <button
                   className="btn-spotlight-primary"
                   onClick={() => {
-                    setSelectedEvent('Urhobo Progress Union Michigan Fundraiser');
+                    setSelectedEvent('The Progressive Union Organization Michigan Fundraiser');
                     setShowRsvpModal(true);
                   }}
                 >
@@ -414,7 +413,7 @@ export const AssociationHomePage: React.FC = () => {
       <section id="efforts" className="assoc-efforts-section">
         <div className="assoc-section-container">
           <div className="efforts-header">
-            <h2>Empowering Urhobo People Through Our Efforts.</h2>
+            <h2>Empowering Our People Through Our Efforts.</h2>
             <p>Where unity meets action for our community</p>
           </div>
 
@@ -513,7 +512,7 @@ export const AssociationHomePage: React.FC = () => {
                 <span className="crest-icon">🌴</span>
               </div>
               <div className="brand-text">
-                <span className="brand-title">UPUMI</span>
+                <span className="brand-title">PUOM</span>
                 <span className="brand-subtitle">MICHIGAN CHAPTER</span>
               </div>
             </div>
@@ -545,7 +544,7 @@ export const AssociationHomePage: React.FC = () => {
         </div>
 
         <div className="assoc-footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Urhobo Progress Union Michigan. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} The Progressive Union Organization, Michigan Chapter. All Rights Reserved.</p>
         </div>
       </footer>
 
@@ -559,7 +558,7 @@ export const AssociationHomePage: React.FC = () => {
             <div className="modal-header-icon">
               <Heart size={28} color="#0d5638" fill="#d8f3dc" />
             </div>
-            <h3>Support UPUMI Michigan</h3>
+            <h3>Support PUOM Michigan</h3>
             <p>Your contribution directly funds community outreach, youth scholarships, and cultural preservation.</p>
 
             {donationSuccess ? (

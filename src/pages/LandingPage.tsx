@@ -130,12 +130,17 @@ export const LandingPage: React.FC = () => {
           <div className="hero-copy">
             <h1>The Digital Platform For Your Organization.</h1>
             <p>Everything your organization needs to manage meetings and members in one place.</p>
-            <button className="hero-demo-btn" onClick={() => setShowDemoModal(true)}>
-              Get Demo Access
-              <span>
-                <Send size={18} fill="currentColor" />
-              </span>
-            </button>
+            <div className="hero-action-row">
+              <div className="phone-stage">
+                <img src={phoneImage} alt="OrgFlow mobile dashboard in hand" />
+              </div>
+              <button className="hero-demo-btn" onClick={() => setShowDemoModal(true)}>
+                Get Demo Access
+                <span>
+                  <Send size={18} fill="currentColor" />
+                </span>
+              </button>
+            </div>
           </div>
 
           <div className="hero-visual" aria-label="OrgFlow dashboard preview">
@@ -155,12 +160,8 @@ export const LandingPage: React.FC = () => {
               <AvatarStack />
             </div>
 
-            <div className="phone-stage">
-              <img src={phoneImage} alt="OrgFlow mobile dashboard in hand" />
-            </div>
-
             <div className="hero-card highlight-card">
-              <h3>UPUMI Highlight</h3>
+              <h3>PUOM Highlight</h3>
               <dl>
                 <div>
                   <dt>Avg.Members Rating</dt>
