@@ -215,9 +215,9 @@ export const MeetingRecorderPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'relative' }}>
       {/* Page Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+      <div className="mtg-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', fontWeight: '800', color: 'var(--primary)' }}>
+          <h2 className="mtg-header-title" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', fontWeight: '800', color: 'var(--primary)' }}>
             Meeting Tracker & AI Summarizer
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem' }}>
@@ -307,7 +307,7 @@ export const MeetingRecorderPage: React.FC = () => {
 
       {/* Selected Meeting Active Panel */}
       {selectedMeeting && (
-        <div style={{ background: '#ffffff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid #e8f0ea' }}>
+        <div className="mtg-panel-card" style={{ background: '#ffffff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid #e8f0ea' }}>
           {/* Header & Tabs */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', borderBottom: '1px solid #f0f5f1', paddingBottom: '16px' }}>
             <div>
@@ -363,12 +363,24 @@ export const MeetingRecorderPage: React.FC = () => {
             .mtg-tab-btn.inactive:hover { color: #0e3d26; background: rgba(255,255,255,0.7); }
             .mtg-tab-btn.active { background: #ffffff; color: #0e3d26; border: 2.5px solid #d4726a; animation: mtgBorderPulse 2s ease-in-out infinite; }
             .mtg-tab-btn.active:hover { transform: translateY(-1px); }
-            .mtg-tab-btn .tab-icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; transition: all 0.3s ease; }
+            .mtg-tab-btn .tab-icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; transition: all 0.3s ease; flex-shrink: 0; }
             .mtg-tab-btn.active .tab-icon { background: #e6f4ea; color: #0e3d26; }
             .mtg-tab-btn.inactive .tab-icon { background: transparent; color: #8aad99; }
             .mtg-tab-btn.inactive:hover .tab-icon { background: #e6f4ea; color: #0e3d26; }
             .mtg-tab-btn .tab-dot { width: 6px; height: 6px; border-radius: 50%; background: #0e3d26; opacity: 0; transform: scale(0); transition: all 0.3s ease; position: absolute; bottom: 6px; left: 50%; margin-left: -3px; }
             .mtg-tab-btn.active .tab-dot { opacity: 1; transform: scale(1); }
+
+            @media (max-width: 760px) {
+              .mtg-page-header { flex-direction: column; align-items: stretch !important; gap: 12px !important; }
+              .mtg-header-title { font-size: 1.4rem !important; }
+              .mtg-panel-card { padding: 16px !important; border-radius: 16px !important; }
+              .mtg-tab-bar { flex-direction: column; gap: 8px; padding: 8px; border-radius: 14px; }
+              .mtg-tab-btn { width: 100%; padding: 10px 14px; font-size: 0.84rem; justify-content: flex-start; }
+              .mtg-tab-btn .tab-dot { display: none; }
+              .mtg-floating-mic { bottom: 20px !important; right: 20px !important; width: 52px !important; height: 52px !important; }
+              .mtg-modal-overlay { padding: 12px !important; }
+              .mtg-modal-card { padding: 20px 16px !important; max-height: 90vh !important; overflow-y: auto !important; border-radius: 18px !important; }
+            }
           `}</style>
           <div className="mtg-tab-bar">
             <button
@@ -674,6 +686,7 @@ export const MeetingRecorderPage: React.FC = () => {
             setNewMeetingTitle(`General Assembly - ${new Date().toLocaleDateString('default', { month: 'short', day: 'numeric' })}`);
             setShowMicModal(true);
           }}
+          className="mtg-floating-mic"
           style={{
             position: 'fixed',
             bottom: '32px',
@@ -700,8 +713,8 @@ export const MeetingRecorderPage: React.FC = () => {
 
       {/* Live Mic Recording Modal */}
       {showMicModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999, padding: '16px' }}>
-          <div style={{ background: '#ffffff', width: '100%', maxWidth: '520px', borderRadius: '24px', padding: '28px', boxShadow: '0 24px 48px rgba(0,0,0,0.25)' }}>
+        <div className="mtg-modal-overlay" style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999, padding: '16px' }}>
+          <div className="mtg-modal-card" style={{ background: '#ffffff', width: '100%', maxWidth: '520px', borderRadius: '24px', padding: '28px', boxShadow: '0 24px 48px rgba(0,0,0,0.25)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: isRecording ? '#fce8e6' : '#e6f4ea', color: isRecording ? '#c5221f' : '#0e3d26', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
