@@ -88,6 +88,21 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
 
   return (
     <div className={`app-layout${isMobileMenuOpen ? ' mobile-nav-open' : ''}`} style={{ display: 'flex', minHeight: '100vh', background: '#f5f8f5' }}>
+      {/* Mobile Sidebar Overlay Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          className="app-sidebar-backdrop"
+          onClick={() => setIsMobileMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(3px)',
+            zIndex: 85
+          }}
+        />
+      )}
+
       {/* Sidebar Navigation */}
       <aside
         className="app-sidebar"

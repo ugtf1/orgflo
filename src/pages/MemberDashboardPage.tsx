@@ -25,6 +25,7 @@ export const MemberDashboardPage: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Welcome Banner */}
       <div
+        className="dash-welcome-banner"
         style={{
           background: 'linear-gradient(135deg, #0e3d26 0%, #165637 100%)',
           borderRadius: '24px',
@@ -50,26 +51,30 @@ export const MemberDashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate('/member/transactions')}
-          style={{
-            background: 'var(--accent-mint)',
-            color: 'var(--primary)',
-            padding: '12px 24px',
-            borderRadius: '9999px',
-            fontWeight: '800',
-            fontSize: '0.95rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}
-        >
-          <CreditCard size={18} /> Pay Dues / View Ledger
-        </button>
+        <div className="dash-banner-actions">
+          <button
+            onClick={() => navigate('/member/transactions')}
+            style={{
+              background: 'var(--accent-mint)',
+              color: 'var(--primary)',
+              padding: '12px 24px',
+              borderRadius: '9999px',
+              fontWeight: '800',
+              fontSize: '0.95rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              width: '100%'
+            }}
+          >
+            <CreditCard size={18} /> Pay Dues / View Ledger
+          </button>
+        </div>
       </div>
 
       {/* Dues Cards Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+      <div className="dash-metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
         <div style={{ background: '#ffffff', borderRadius: '18px', padding: '20px', boxShadow: 'var(--shadow-sm)', border: '1px solid #e8f0ea' }}>
           <div style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '8px' }}>
             TOTAL DUES PAID

@@ -97,6 +97,7 @@ export const AdminDashboardPage: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       {/* Top Welcome Banner */}
       <div
+        className="dash-welcome-banner"
         style={{
           background: 'linear-gradient(135deg, #0e3d26 0%, #165637 100%)',
           borderRadius: '24px',
@@ -117,7 +118,7 @@ export const AdminDashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div className="dash-banner-actions" style={{ display: 'flex', gap: '12px' }}>
           <button
             onClick={() => navigate('/admin/members')}
             style={{
@@ -154,7 +155,7 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* Metric Cards Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px' }}>
+      <div className="dash-metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px' }}>
         <div style={{ background: '#ffffff', borderRadius: '18px', padding: '20px', boxShadow: 'var(--shadow-sm)', border: '1px solid #e8f0ea' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
