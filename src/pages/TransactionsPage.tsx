@@ -173,15 +173,15 @@ export const TransactionsPage: React.FC = () => {
             <tbody>
               {filtered.map((t) => (
                 <tr key={t.id} style={{ borderBottom: '1px solid #f0f5f1' }}>
-                  <td style={{ padding: '14px 16px', fontWeight: '700', color: 'var(--primary)' }}>{t.receiptNumber}</td>
-                  <td style={{ padding: '14px 16px', fontWeight: '600' }}>{t.memberName}</td>
-                  <td style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{t.type}</td>
-                  <td style={{ padding: '14px 16px', fontWeight: '700', color: '#137333' }}>
+                  <td data-label="Receipt #" style={{ padding: '14px 16px', fontWeight: '700', color: 'var(--primary)' }}>{t.receiptNumber}</td>
+                  <td data-label="Member" style={{ padding: '14px 16px', fontWeight: '600' }}>{t.memberName}</td>
+                  <td data-label="Type" style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{t.type}</td>
+                  <td data-label="Amount" style={{ padding: '14px 16px', fontWeight: '700', color: '#137333' }}>
                     {settings.currency}{t.amount}
                   </td>
-                  <td style={{ padding: '14px 16px', color: '#555' }}>{t.paymentMethod}</td>
-                  <td style={{ padding: '14px 16px', color: '#555' }}>{t.date}</td>
-                  <td style={{ padding: '14px 16px' }}>
+                  <td data-label="Method" style={{ padding: '14px 16px', color: '#555' }}>{t.paymentMethod}</td>
+                  <td data-label="Date" style={{ padding: '14px 16px', color: '#555' }}>{t.date}</td>
+                  <td data-label="Status" style={{ padding: '14px 16px' }}>
                     <span className={`badge badge-${t.status.toLowerCase()}`}>{t.status}</span>
                   </td>
                 </tr>

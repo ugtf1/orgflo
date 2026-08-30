@@ -344,17 +344,17 @@ export const AdminDashboardPage: React.FC = () => {
             <tbody>
               {transactions.slice(0, 5).map((tx) => (
                 <tr key={tx.id} style={{ borderBottom: '1px solid #f0f5f1' }}>
-                  <td style={{ padding: '14px 16px', fontWeight: '700', color: 'var(--primary)' }}>
+                  <td data-label="Receipt / TXN" style={{ padding: '14px 16px', fontWeight: '700', color: 'var(--primary)' }}>
                     {tx.receiptNumber}
                   </td>
-                  <td style={{ padding: '14px 16px', fontWeight: '600' }}>{tx.memberName}</td>
-                  <td style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{tx.type}</td>
-                  <td style={{ padding: '14px 16px', fontWeight: '700', color: 'var(--primary)' }}>
+                  <td data-label="Member" style={{ padding: '14px 16px', fontWeight: '600' }}>{tx.memberName}</td>
+                  <td data-label="Type" style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{tx.type}</td>
+                  <td data-label="Amount" style={{ padding: '14px 16px', fontWeight: '700', color: 'var(--primary)' }}>
                     {settings.currency}{tx.amount}
                   </td>
-                  <td style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{tx.paymentMethod}</td>
-                  <td style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{tx.date}</td>
-                  <td style={{ padding: '14px 16px' }}>
+                  <td data-label="Method" style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{tx.paymentMethod}</td>
+                  <td data-label="Date" style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{tx.date}</td>
+                  <td data-label="Status" style={{ padding: '14px 16px' }}>
                     <span
                       className={`badge ${
                         tx.status === 'Paid' ? 'badge-active' : tx.status === 'Pending' ? 'badge-pending' : 'badge-overdue'

@@ -426,7 +426,7 @@ export const MeetingRecorderPage: React.FC = () => {
                     const status = selectedMeeting.attendanceRecords[m.id] || 'Absent';
                     return (
                       <tr key={m.id} style={{ borderBottom: '1px solid #f0f5f1' }}>
-                        <td style={{ padding: '12px 14px', fontWeight: '700', color: 'var(--primary)' }}>
+                        <td data-label="Member" style={{ padding: '12px 14px', fontWeight: '700', color: 'var(--primary)' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <img
                               src={m.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'}
@@ -436,9 +436,9 @@ export const MeetingRecorderPage: React.FC = () => {
                             <span>{m.name}</span>
                           </div>
                         </td>
-                        <td style={{ padding: '12px 14px', color: '#555' }}>{m.department}</td>
-                        <td style={{ padding: '12px 14px', color: '#555' }}>{m.role}</td>
-                        <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                        <td data-label="Department" style={{ padding: '12px 14px', color: '#555' }}>{m.department}</td>
+                        <td data-label="Role" style={{ padding: '12px 14px', color: '#555' }}>{m.role}</td>
+                        <td data-label="Status" style={{ padding: '12px 14px', textAlign: 'center' }}>
                           <div style={{ display: 'inline-flex', gap: '6px' }}>
                             <button
                               disabled={!isAdmin}

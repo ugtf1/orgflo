@@ -152,13 +152,13 @@ export const MemberDashboardPage: React.FC = () => {
               <tbody>
                 {myTxs.slice(0, 4).map((t) => (
                   <tr key={t.id} style={{ borderBottom: '1px solid #f0f5f1' }}>
-                    <td style={{ padding: '12px', fontWeight: '700', color: 'var(--primary)' }}>{t.receiptNumber}</td>
-                    <td style={{ padding: '12px', color: '#555' }}>{t.type}</td>
-                    <td style={{ padding: '12px', fontWeight: '700', color: '#137333' }}>
+                    <td data-label="Receipt #" style={{ padding: '12px', fontWeight: '700', color: 'var(--primary)' }}>{t.receiptNumber}</td>
+                    <td data-label="Type" style={{ padding: '12px', color: '#555' }}>{t.type}</td>
+                    <td data-label="Amount" style={{ padding: '12px', fontWeight: '700', color: '#137333' }}>
                       {settings.currency}{t.amount}
                     </td>
-                    <td style={{ padding: '12px', color: '#555' }}>{t.date}</td>
-                    <td style={{ padding: '12px' }}>
+                    <td data-label="Date" style={{ padding: '12px', color: '#555' }}>{t.date}</td>
+                    <td data-label="Status" style={{ padding: '12px' }}>
                       <span className="badge badge-active">{t.status}</span>
                     </td>
                   </tr>

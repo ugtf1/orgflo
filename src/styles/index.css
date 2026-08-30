@@ -2849,8 +2849,68 @@ button {
     flex-wrap: wrap;
   }
 
+  /* Collapsed mobile card style for all dashboard tables (No horizontal scroll needed!) */
+  .app-page-content [style*='overflowX'],
+  .app-page-content [style*='overflow-x'],
+  .app-page-content div:has(> table) {
+    overflow-x: visible !important;
+  }
+
   .app-page-content table {
-    min-width: 580px;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    border: none !important;
+  }
+
+  .app-page-content table thead {
+    display: none !important;
+  }
+
+  .app-page-content table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .app-page-content table tbody tr {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #ffffff !important;
+    border: 1.5px solid #e0ebe3 !important;
+    border-radius: 16px !important;
+    padding: 14px 16px !important;
+    box-shadow: 0 4px 12px rgba(14, 61, 38, 0.04) !important;
+    gap: 10px !important;
+  }
+
+  .app-page-content table tbody tr td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 0 !important;
+    border-bottom: 1px dashed #e8f0eb !important;
+    font-size: 0.88rem !important;
+    text-align: right !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-page-content table tbody tr td:last-child {
+    border-bottom: none !important;
+  }
+
+  .app-page-content table tbody tr td[data-label]::before {
+    content: attr(data-label);
+    font-weight: 800;
+    color: var(--primary, #0e3d26);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-right: 12px;
+    text-align: left;
+    flex-shrink: 0;
   }
 }
 

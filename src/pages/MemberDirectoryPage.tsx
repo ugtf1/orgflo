@@ -200,7 +200,7 @@ export const MemberDirectoryPage: React.FC = () => {
             <tbody>
               {filteredMembers.map((m) => (
                 <tr key={m.id} style={{ borderBottom: '1px solid #f0f5f1' }}>
-                  <td style={{ padding: '14px 16px' }}>
+                  <td data-label="Member" style={{ padding: '14px 16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <img
                         src={m.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'}
@@ -213,19 +213,19 @@ export const MemberDirectoryPage: React.FC = () => {
                       </div>
                     </div>
                   </td>
-                  <td style={{ padding: '14px 16px', fontWeight: '600', color: '#555' }}>{m.memberCode}</td>
-                  <td style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{m.department}</td>
-                  <td style={{ padding: '14px 16px', fontWeight: '600' }}>{m.role}</td>
-                  <td style={{ padding: '14px 16px', fontWeight: '700', color: '#137333' }}>
+                  <td data-label="Code" style={{ padding: '14px 16px', fontWeight: '600', color: '#555' }}>{m.memberCode}</td>
+                  <td data-label="Department" style={{ padding: '14px 16px', color: 'var(--text-muted)' }}>{m.department}</td>
+                  <td data-label="Role" style={{ padding: '14px 16px', fontWeight: '600' }}>{m.role}</td>
+                  <td data-label="Dues Paid" style={{ padding: '14px 16px', fontWeight: '700', color: '#137333' }}>
                     {settings.currency}{m.duesPaid}
                   </td>
-                  <td style={{ padding: '14px 16px', fontWeight: '700', color: m.duesOwed > 0 ? '#c5221f' : '#555' }}>
+                  <td data-label="Dues Owed" style={{ padding: '14px 16px', fontWeight: '700', color: m.duesOwed > 0 ? '#c5221f' : '#555' }}>
                     {settings.currency}{m.duesOwed}
                   </td>
-                  <td style={{ padding: '14px 16px' }}>
+                  <td data-label="Status" style={{ padding: '14px 16px' }}>
                     <span className={`badge badge-${m.status.toLowerCase()}`}>{m.status}</span>
                   </td>
-                  <td style={{ padding: '14px 16px', textAlign: 'right' }}>
+                  <td data-label="Actions" style={{ padding: '14px 16px', textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                       <button
                         onClick={() => navigate(`/admin/members/${m.id}`)}
