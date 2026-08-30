@@ -1313,29 +1313,16 @@ button {
   }
 
   .hero-visual {
-    display: grid;
-    gap: 18px;
-    height: auto;
-    margin-top: 30px;
+    display: none !important;
   }
 
-  .hero-card {
-    position: relative;
-    inset: auto;
-    transform: none;
-    width: 100%;
-  }
-
-  .pain-section,
-  .steps-section,
-  .features-section,
-  .faq-section {
-    padding-left: 20px;
-    padding-right: 20px;
+  .pain-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 
   .pain-visual {
-    min-height: 520px;
+    display: none !important;
   }
 
   .member-card,
