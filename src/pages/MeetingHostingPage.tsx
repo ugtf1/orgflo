@@ -112,7 +112,7 @@ export const MeetingHostingPage: React.FC = () => {
               Your Hosting Assignment
             </div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '800', margin: '4px 0 2px 0' }}>
-              ⭐ You are assigned to host the {userHostingMonth.month} {selectedYear} Meeting!
+              You are assigned to host the {userHostingMonth.month} {selectedYear} Meeting!
             </h3>
             <p style={{ fontSize: '0.88rem', color: '#c3ded0', margin: 0 }}>
               Notes: {userHostingMonth.notes || 'Monthly host responsibilities & cultural refreshment setup.'}

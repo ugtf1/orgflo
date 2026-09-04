@@ -93,7 +93,7 @@ export const AssociationHomePage: React.FC = () => {
     <div className="assoc-page">
       {/* Top Banner */}
       <div className="assoc-top-banner">
-        <span>🎉 Welcome to <strong>The Progressive Union Organization, Michigan Chapter</strong></span>
+        <span>Welcome to <strong>The Progressive Union Organization, Michigan Chapter</strong></span>
         <div className="banner-links">
           <button onClick={() => navigate('/admin')} className="banner-portal-link">
             <Lock size={13} /> Admin Portal
@@ -199,9 +199,9 @@ export const AssociationHomePage: React.FC = () => {
       {/* Continuous Moving Photo Gallery Marquee */}
       <section className="assoc-marquee-section">
         <div className="marquee-header">
-          <Sparkles size={16} className="sparkle-icon" />
+          
           <span>VIBRANT CULTURAL HERITAGE & COMMUNITY LIFE</span>
-          <Sparkles size={16} className="sparkle-icon" />
+          
         </div>
         <div className="marquee-track">
           <div className="marquee-content">

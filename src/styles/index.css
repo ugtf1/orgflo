@@ -1626,26 +1626,31 @@ button {
   display: flex;
   height: min(620px, 72vh);
   justify-content: center;
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
 
 .assoc-hero-img {
   height: 100%;
+  inset: 0;
   object-fit: cover;
   object-position: center 25%;
+  position: absolute;
   width: 100%;
+  z-index: 0;
 }
 
 .hero-overlay-gradient {
   background: linear-gradient(
     180deg,
-    rgba(13, 86, 56, 0.2) 0%,
-    rgba(9, 55, 34, 0.75) 60%,
-    rgba(5, 32, 20, 0.92) 100%
+    rgba(13, 86, 56, 0.25) 0%,
+    rgba(9, 55, 34, 0.78) 60%,
+    rgba(5, 32, 20, 0.94) 100%
   );
   inset: 0;
   position: absolute;
+  z-index: 1;
 }
 
 .hero-text-overlay {
@@ -1656,6 +1661,7 @@ button {
   padding: 40px 24px;
   position: relative;
   text-align: center;
+  width: 100%;
   z-index: 2;
 }
 
@@ -3000,29 +3006,85 @@ button {
   }
 
   .assoc-hero-card {
-    border-radius: 22px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(13, 86, 56, 0.2);
   }
 
   .assoc-hero-image-wrapper {
-    height: min(560px, 78vh);
-    min-height: 460px;
+    height: auto;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .assoc-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+  }
+
+  .hero-overlay-gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 28, 18, 0.68) 0%,
+      rgba(8, 46, 28, 0.82) 45%,
+      rgba(3, 18, 11, 0.94) 100%
+    );
+  }
+
+  .hero-text-overlay {
+    padding: 42px 18px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hero-org-title {
+    font-size: clamp(1.65rem, 6.2vw, 2.3rem);
+    line-height: 1.15;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+  }
+
+  .hero-org-location {
+    font-size: clamp(1.15rem, 4.2vw, 1.5rem);
+    color: #f3c31a;
+    margin: 6px 0 14px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
   }
 
   .hero-pill-badge {
+    background: rgba(14, 61, 38, 0.82);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(243, 195, 26, 0.65);
     letter-spacing: 1px;
-    max-width: 100%;
-    text-align: center;
+    max-width: 95%;
+    padding: 6px 16px;
+    font-size: 0.74rem;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+    border-radius: 999px;
   }
 
   .hero-cta-buttons {
+    flex-direction: column;
     width: 100%;
+    max-width: 290px;
+    gap: 12px;
   }
 
   .assoc-btn-white,
   .assoc-btn-gold {
     justify-content: center;
-    max-width: 320px;
+    max-width: 100%;
     width: 100%;
+    padding: 13px 20px;
+    font-size: 0.92rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
   }
 
   .spotlight-card-grid {
@@ -3116,17 +3178,24 @@ button {
   }
 
   .assoc-hero-image-wrapper {
-    height: 540px;
+    min-height: 480px;
+    height: auto;
   }
 
   .hero-org-title {
-    line-height: 1.08;
+    font-size: 1.55rem;
+    line-height: 1.15;
+  }
+
+  .hero-org-location {
+    font-size: 1.15rem;
+    margin: 4px 0 12px;
   }
 
   .hero-pill-badge {
-    font-size: 0.7rem;
-    padding-left: 14px;
-    padding-right: 14px;
+    font-size: 0.68rem;
+    padding: 5px 12px;
+    margin-bottom: 20px;
   }
 
   .join-form,
@@ -3135,7 +3204,7 @@ button {
   }
 
   .hero-text-overlay {
-    padding: 24px 16px;
+    padding: 32px 14px;
   }
 
   .spotlight-card-grid {
